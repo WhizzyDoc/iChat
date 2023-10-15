@@ -222,6 +222,15 @@ function sendGPTChat() {
             last_chat();
         }
     })
+    .catch(err => {
+        var temp = `<div class="message-con">
+                    <div class="chat other">
+                        <div class="msg error-message">${err}</div>
+                    </div>
+                </div>`;
+            $('#gpt-content').append(temp);
+            last_chat();
+    })
 }
 
 function createGPTRoom() {
