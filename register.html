@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!-- Created By Rigan Tech -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+      <title>Register</title>
+      <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/fontawesome.css" />
+    <link rel="stylesheet" href="css/sweetalert.min.css" />
+    <link rel="stylesheet" href="css/register.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    
+   </head>
+   <body>
+    <script>
+      if(localStorage.username && localStorage.password) {
+         location.href = './index.html';
+         return;
+      }
+   </script>
+      <div class="container">
+         <header>Signup Form</header>
+
+         <div class="form-outer">
+
+           <form action="#" id="signup-form" autocomplete="off" spellcheck="false">
+
+             <div class="page slide-page">
+               <div class="field">
+                 <div class="label"><span class="req">*</span> First Name</div>
+                 <input type="text" id="first-name" required>
+               </div>
+               <div class="field">
+                 <div class="label"><span class="req">*</span> Last Name</div>
+                 <input type="text" id="last-name" required>
+               </div>
+               <div class="field">
+                 <button class="firstNext next">Next</button>
+               </div>
+             </div>
+   
+             <div class="page">
+               <div class="field">
+                 <div class="label"><span class="req">*</span> Email Address</div>
+                 <input type="email" id="email" placeholder="e.g youremail@domain.com" required>
+               </div>
+               <div class="field">
+                 <div class="label"><span class="req">*</span> Phone Number</div>
+                 <input type="tel" id="phone-number" placeholder="e.g 08012345678" required>
+               </div>
+               <div class="field btns">
+                 <button class="prev-1 prev">Previous</button>
+                 <button class="next-1 next">Next</button>
+               </div>
+             </div>
+   
+             <div class="page">
+               <div class="field">
+                 <div class="label"><span class="req">*</span> Gender</div>
+                 <select id="gender">
+                   <option value="Male" selected>Male</option>
+                   <option value="Female">Female</option>
+                   <option value="Other">Other</option>
+                 </select>
+               </div>
+               <div class="field">
+                <div class="label">About Yourself</div>
+                <textarea id="bio" value=""></textarea>
+              </div>
+               <div class="field btns">
+                 <button class="prev-2 prev">Previous</button>
+                 <button class="next-2 next">Next</button>
+               </div>
+             </div>
+   
+             <div class="page">
+               <div class="field">
+                 <div class="label"><span class="req">*</span> Username</div>
+                 <input type="text" id="username" required>
+               </div>
+               <div class="field">
+                 <div class="label"><span class="req">*</span> Password <span class="icon2 fa fa-eye" id="pass"></span></div>
+                 <input type="password" id="password" required>
+               </div>
+               <div class="field">
+                  <div class="label"><span class="req">*</span> Confirm Password <span class="icon2 fa fa-eye" id="cpass"></span></div>
+                  <input type="password" id="cpassword" required>
+                </div>
+               <div class="field btns">
+                 <button class="prev-3 prev">Previous</button>
+                 <button type="submit" class="submit">Register</button>
+               </div>
+             </div>
+           </form>
+
+         </div>
+
+         <h5>Already A User? <a href="./login.html">Login</a></h5><br>
+       </div>
+
+      <script src="js/register.js"></script>
+   </body>
+</html>

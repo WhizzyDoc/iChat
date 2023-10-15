@@ -1,0 +1,74 @@
+{
+    "result": [
+        {
+            "title": "Image resizer",
+            "link": "image-resizer",
+            "slug": "image resizer"
+        },
+        {
+            "title": "Image Editor",
+            "link": "image-editor",
+            "slug": "image editor"
+        },
+        {
+            "title": "Audio Recorder",
+            "link": "audio-recorder",
+            "slug": "audio recorder"
+        },
+        {
+            "title": "Dictionary",
+            "link": "dictionary",
+            "slug": "dictionary"
+        },
+        {
+            "title": "To-Do List",
+            "link": "todo-list",
+            "slug": "todo list"
+        },
+        {
+            "title": "Note App",
+            "link": "note-app",
+            "slug": "note app"
+        },
+        {
+            "title": "Simple Calculator",
+            "link": "basic-calculator",
+            "slug": "simple calculator"
+        },
+        {
+            "title": "Scientific Calculator",
+            "link": "scientific-calculator",
+            "slug": "scientific calculator"
+        },
+        {
+            "title": "Age Calculator",
+            "link": "age-calculator",
+            "slug": "age calculator"
+        },
+        {
+            "title": "Interest Calculator",
+            "link": "interest-calculator",
+            "slug": "simple interest calculator"
+        },
+        {
+            "title": "BMI Calculator",
+            "link": "bmi-calculator",
+            "slug": "bmi calculator"
+        },
+        {
+            "title": "Language Translator",
+            "link": "language-translator",
+            "slug": "language translator"
+        },
+        {
+            "title": "Currency Converter",
+            "link": "currency-converter",
+            "slug": "currency converter"
+        },
+        {
+            "title": "Mathematics Bot",
+            "link": "Mini-Wolfram",
+            "slug": "mathematics bot"
+        }
+    ]
+}

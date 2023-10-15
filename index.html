@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="iChat" />
+  <meta name="description" content=""/> 
+  <meta name="author" content="Rigan Tech" />
+  <meta name="keywords" content="" />
+  <link rel="shortcut icon" href="./image/logo.png" />
+  <link rel="shortcut" href="./image/logo.png" />
+  <link rel="apple-touch-icon" href="./image/logo.png" />
+  <title>iChat</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/rigan.css" />
+  <link rel="stylesheet" href="css/fontawesome.css" />
+  <link rel="stylesheet" href="css/sweetalert.min.css" />
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Boxicons CSS -->
+  <link href='boxicons/css/boxicons.min.css' rel='stylesheet'>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/emoji.js"></script>
+  <script src="js/sweetalert.min.js"></script>
+  <script src="js/he.js"></script>
+</head>
+<body>
+  <audio src="file/keypad.wav" class="keypad"></audio>
+  <audio src="file/message_send.wav" class="message_send"></audio>
+  <audio src="file/notification.wav" class="notification"></audio>
+  <audio src="file/sound_recorder.wav" class="sound_recorder"></audio>
+
+  <div class="page-loader">
+    <img src="./image/logo.png" alt="" style="width:70vw;height:auto" />
+    <h3 class="w-xxlarge w-bold-x">iChat</h3>
+    <div class="loader" style="margin: 20px;"></div>
+    <h6 class="w-center w-display-bottommiddle w-bold w-small">
+      <i class="fa fa-android"></i> From Rigan Tech &copy; <span id="mydate"></span>
+    </h6>
+  </div>
+  <script>
+    var date = new Date().getFullYear();
+    $('#mydate').text(date);
+  </script>
+    <div class="app-container">
+      
+      <!-- viewing status -->
+      <div class="status-view">
+
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-stat-view"></i>
+            <img class="group-icon status-dp" alt="" />
+            <div class="status-username"></div>
+          </div>
+          <div class="header-menu-c">
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="" href="#"><i class='bx bxs-user-circle'></i> View Profile</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content status-content">
+          <div class="btm-slides"></div>
+          <div class="images"></div>
+        </div>
+
+        <form class="message-form stat-reply" id="stat-reply">
+          
+          <div class="chat-form">
+            <i class="bx bx-smile emoji-but3"></i>
+            <textarea class="chat-input" rows="1" id="status-reply"></textarea>
+            <i class="bx bx-camera"></i>
+          </div>
+          <button type="submit" class="send-btn" id=""><i class="bx bx-microphone"></i></button>
+        </form>
+
+        <div class="stat-user-view-con">
+          <div class="stat-view-header">
+            <i class="fa fa-eye"></i> <span id="stat-view-no">0</span> views
+          </div>
+          <div class="stat-view-content"></div>
+        </div>
+      </div>
+      
+      <!-- Add status container -->
+      <div class="add-status-container">
+
+        <div class="text-editor">
+          <div>
+            <i class="bx bx-chevron-left-circle close-add-status"></i>
+          </div>
+          <div>
+            <span><i class="bx bx-smile"></i></span>
+            <span class="bold-change">B</span>
+            <span class="font-change">Aa</span>
+            <i class="fa fa-paint-brush color-change"></i>
+            <div class="dropdown">
+              <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+              <div class="dropdown-content">
+                <a class="" href="#"><i class='bx bxs-user-circle'></i> View Profile</a>
+                <a class="" href="#"><i class='bx bxs-search'></i> Search</a>
+                <a class="chat-refresh" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <textarea id="status" max-length="400" placeholder="Your status here..."></textarea>
+        <div class="send-status">
+          <i class="bx bx-send"></i>
+        </div>
+      </div>
+
+      <!-- notification container -->
+      <div class="note-container">
+        <div class="header noti">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-note"></i>
+            <h4 class="w-bold">Notifications</h4>
+          </div>
+          <div class="header-menu-c">
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="note-refresh" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="app-content" id="note-content"></div>
+        <div class="note-modal">
+          <div class="note-modal-header"></div>
+          <div class="note-modal-body"></div>
+          <div class="note-modal-footer">
+            <button class="btn btn-danger close-note-modal">Close</button>
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- Sample container -->
+      <div class="container w-hide">
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-note"></i>
+            <h3>Notifications</h3>
+          </div>
+          <div class="header-menu">
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="note-refresh" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="app-content" id="note-content"></div>
+      </div>
+
+      <!-- Search user -->
+      <div class="search-user-container">
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-search-user"></i>
+            <h5 class="w-bold">Search Friends</h5>
+          </div>
+          <div class="header-menu-c">
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="search-user-refresh" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+            </div>
+          </div>
+        </div>
+        <form class="search-user-form">
+            <input type="text" class="form-control" id="search-user" placeholder="Username, Name, Phone No, Email">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+        </form>
+
+        <div class="app-content" id="search-user-content">
+        </div>
+
+      </div>
+
+      <!-- Search group -->
+      <div class="search-group-container">
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-search-group"></i>
+            <h5 class="w-bold">Search Groups</h5>
+          </div>
+          <div class="header-menu-c">
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="search-group-refresh" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+            </div>
+          </div>
+        </div>
+        <form class="search-group-form">
+            <input type="text" class="form-control" id="search-group" placeholder="title, description">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+        </form>
+
+        <div class="app-content" id="search-group-content">
+        </div>
+
+      </div>
+
+      <!-- ChatGPT container -->
+      <div class="gpt-container">
+        <!--
+        <marquee class="encrypt">
+          <i class="fa fa-lock"></i> All chat messages are protected and end to end encryped.
+        </marquee>
+      -->
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-gpt-container"></i>
+            <img class="group-icon" src="./image/bot.png" alt="" />
+            <div class="gpt-title">ChatGPT</div>
+          </div>
+          <div class="header-menu header-menu-c">
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="open-gpt-history" href="#"><i class='fa fa-history'></i> View Chat History</a>
+                  <a class="gpt-refresh" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content" id="gpt-content"></div>
+
+        <form class="message-form" id="gpt-chat-form">
+          <div class="chat-form">
+            <textarea class="chat-input" rows="1" id="gpt-prompt" placeholder="Message"></textarea>
+          </div>
+          <button type="submit" class="" id="gpt-chat-send"><i class="bx bx-send"></i></button>
+        </form>
+
+      </div>
+
+      <!-- ChatGPT history container -->
+      <div class="gpt-history-container">
+
+        <div class="header">
+          <div class="header-title-c" style="width:100%;">
+            <i class="bx bx-chevron-left-circle close-gpt-history"></i>
+            <div class="">Conversation History</div>
+          </div>
+        </div>
+
+        <div class="app-content gpt-history-content">
+          <div class="create-new-room"><i class="fa fa-plus"></i> New Conversation</div>
+          <table class="table table-hover">
+            <tbody  id="gpt-history-content">
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+
+      <!-- Private chat container -->
+      <div class="chat-container">
+        <marquee class="encrypt">
+          <i class="fa fa-lock"></i> All chat messages are protected and end to end encryped.
+        </marquee>
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-chat"></i>
+            <img class="group-icon icon-friend v-profile" alt="" />
+            <div class="friend-username v-profile"></div>
+            <div class="online" id="online"></div>
+          </div>
+          <div class="header-menu header-menu-c">
+            <i class="bx bx-phone"></i>
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="view-pr" href="#"><i class='bx bxs-user-circle'></i> View Profile</a>
+                  <a class="" href="#"><i class='bx bxs-search'></i> Search</a>
+                  <a class="chat-refresh" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content" id="chat-content"></div>
+
+        <div class="dm-block">
+          <span class="w-text-red w-bold-x"><i class="fa fa-warning"></i> You have been blocked by this user</span>
+        </div>
+
+        <form class="message-form" id="dm-chat-form">
+          <div class="dd-content" id="dd-chat">
+            <div class="content-emoji">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#face">&#128512;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#animal">&#128053;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#food">&#127815;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#heart">&#10084;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#dress">&#128084;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#hand">&#9757;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#place">&#127963;</a>
+                  </li>
+                </ul>
+    
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active container dd-emoji face" id="face"></div>
+                  <div class="tab-pane container dd-emoji animal" id="animal"></div>
+                  <div class="tab-pane container dd-emoji food" id="food"></div>
+                  <div class="tab-pane container dd-emoji heart" id="heart"></div>
+                  <div class="tab-pane container dd-emoji dress" id="dress"></div>
+                  <div class="tab-pane container dd-emoji hand" id="hand"></div>
+                  <div class="tab-pane container dd-emoji place" id="place"></div>
+                </div>
+              </div>
+          </div>
+          <div class="chat-form">
+
+            <div id="file-preview" class="file-preview"></div>
+
+            <div class="file-send-con">
+              <input type="file" id="doc-file" data-id="doc" name="chat-files" accept=".doc, .docx, .ppt, .pptx, .txt, .xls, .xlsx, .txt, .csv, .html, .xml, .json, .pptm, .dotx, .tsv, .log, .css, .js, .py, .java, .cpp, .c, .ejs, .rar, .zip, .ini" />
+              <input type="file" id="image-file" data-id="image" name="chat-files" accept="image/*" />
+              <input type="file" id="audio-file" data-id="audio" name="chat-files" accept="audio/*" />
+              <input type="file" id="video-file" data-id="video" name="chat-files" accept="video/*" />
+              <input type="file" id="pdf-file" data-id="pdf" name="chat-files" accept=".pdf" />
+              
+              <label for="doc-file" class="file-send-item">
+                <i class="fa fa-file-o doc-file"></i>
+                <p>Document</p>
+              </label>
+              <label for="image-file" class="file-send-item">
+                <i class="fa fa-photo image-file"></i>
+                <p>Image</p>
+              </label>
+              <label for="audio-file" class="file-send-item">
+                <i class="bx bx-microphone audio-file"></i>
+                <p>Audio</p>
+              </label>
+              <label for="pdf-file" class="file-send-item">
+                <i class="fa fa-file-pdf-o pdf-file"></i>
+                <p>PDF</p>
+              </label>
+              <label for="video-file" class="file-send-item">
+                <i class="fa fa-video-camera video-file"></i>
+                <p>Video</p>
+              </label>
+              <label class="file-send-item">
+                <i class="fa fa-bar-chart poll-file"></i>
+                <p>Poll</p>
+              </label>
+              
+            </div>
+
+            <div class="rec-audio-con">
+              <div id="rec-state">recording...</div>
+              <div id="rec-time"></div>
+              <div id="play-rec" style="color:green"><i class="fa fa-stop"></i></div>
+              <div id="cancel-rec" style="color:red"><i class="fa fa-trash"></i></div>
+              <audio id="record" controls style="display:none;"></audio>
+              <div id="send-rec" style="display:none;color:purple"><i class="fa fa-send"></i></div>
+            </div>
+
+            <i class="bx bx-smile emoji-but"></i>
+            <textarea class="chat-input" rows="1" id="chat-message" placeholder="Message"></textarea>
+            <i class="bx bx-camera file-send-btn"></i>
+          </div>
+          <button type="submit" class="send-btn" id="chat-send"><i class="bx bx-microphone"></i></button>
+          <input type="hidden" id="room_id" value="" />
+          <input type="hidden" id="receiver_id" value="" />
+        </form>
+
+      </div>
+      <div class="file-s-close"><i class="fa fa-close"></i></div>
+      <div class="g-file-s-close"><i class="fa fa-close"></i></div>
+      <!-- group chat container -->
+      <div class="group-chat-container">
+        <marquee class="encrypt">
+          <i class="fa fa-lock"></i> All chat messages are protected and end to end encryped.
+        </marquee>
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-group-chat"></i>
+            <img class="group-icon icon-group" alt="" />
+            <div class="group-title"></div>
+            
+          </div>
+          <div class="header-menu header-menu-c">
+              <i class="bx bx-phone"></i>
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="" href="#"><i class='bx bxs-user-circle'></i> View Group</a>
+                  <a class="" href="#"><i class='bx bxs-search'></i> Search</a>
+                  <a class="group-chat-refresh" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content" id="group-chat-content"></div>
+        <form class="message-form" id="group-chat-form">
+          <div class="dd-content" id="dd-group">
+            <div class="content-emoji">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#face">&#128512;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#animal">&#128053;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#food">&#127815;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#heart">&#10084;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#dress">&#128084;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#hand">&#9757;</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#place">&#127963;</a>
+                  </li>
+                </ul>
+    
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active container dd-emoji face" id="face"></div>
+                  <div class="tab-pane container dd-emoji animal" id="animal"></div>
+                  <div class="tab-pane container dd-emoji food" id="food"></div>
+                  <div class="tab-pane container dd-emoji heart" id="heart"></div>
+                  <div class="tab-pane container dd-emoji dress" id="dress"></div>
+                  <div class="tab-pane container dd-emoji hand" id="hand"></div>
+                  <div class="tab-pane container dd-emoji place" id="place"></div>
+                </div>
+              </div>
+        </div>
+          <div class="chat-form">
+
+            <div id="g-file-preview" class="file-preview"></div>
+
+            <div class="file-send-con">
+              <input type="file" id="g-doc-file" data-id="doc" name="g-chat-files" accept=".doc, .docx, .ppt, .pptx, .txt, .xls, .xlsx, .txt, .csv, .html, .xml, .json, .pptm, .dotx, .tsv, .log, .css, .js, .py, .java, .cpp, .c, .ejs, .rar, .zip, .ini" />
+              <input type="file" id="g-image-file" data-id="image" name="g-chat-files" accept="image/*" />
+              <input type="file" id="g-audio-file" data-id="audio" name="g-chat-files" accept="audio/*" />
+              <input type="file" id="g-video-file" data-id="video" name="g-chat-files" accept="video/*" />
+              <input type="file" id="g-pdf-file" data-id="pdf" name="g-chat-files" accept=".pdf" />
+              
+              <label for="g-doc-file" class="file-send-item">
+                <i class="fa fa-file-o doc-file"></i>
+                <p>Document</p>
+              </label>
+              <label for="g-image-file" class="file-send-item">
+                <i class="fa fa-photo image-file"></i>
+                <p>Image</p>
+              </label>
+              <label for="g-audio-file" class="file-send-item">
+                <i class="bx bx-microphone audio-file"></i>
+                <p>Audio</p>
+              </label>
+              <label for="g-pdf-file" class="file-send-item">
+                <i class="fa fa-file-pdf-o pdf-file"></i>
+                <p>PDF</p>
+              </label>
+              <label for="g-video-file" class="file-send-item">
+                <i class="fa fa-video-camera video-file"></i>
+                <p>Video</p>
+              </label>
+              <label class="file-send-item">
+                <i class="fa fa-bar-chart poll-file"></i>
+                <p>Poll</p>
+              </label>
+
+            </div>
+
+            <div class="g-rec-audio-con">
+              <div id="g-rec-state">recording...</div>
+              <div id="g-rec-time"></div>
+              <div id="g-play-rec" style="color:green"><i class="fa fa-stop"></i></div>
+              <div id="g-cancel-rec" style="color:red"><i class="fa fa-trash"></i></div>
+              <audio id="g-record" controls style="display:none;"></audio>
+              <div id="g-send-rec" style="display:none;color:purple"><i class="fa fa-send"></i></div>
+            </div>
+
+            <i class="bx bx-smile emoji-but2"></i>
+            <textarea class="chat-input" rows="1" id="group-chat-message" placeholder="Message"></textarea>
+            <i class="bx bx-camera file-send-btn"></i>
+          </div>
+          <button type="submit" class="send-btn" id="group-chat-send"><i class="bx bx-microphone"></i></button>
+          <input type="hidden" id="group_id" value="" />
+        </form>
+
+      </div>
+
+      <!-- Friend Profile container -->
+      <div class="profile-container">
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-profile-con"></i>
+            <h4 class="w-bold name-title"></h4>
+          </div>
+          <div class="header-menu">
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="" data-id="" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-content" id="profile-content">
+
+          <div class="sec pro-det-sec">
+            <img class="profile-dp" src="" alt="" />
+            <div class="h5 name-pro"></div>
+            <div class="h6 email-pro"></div>
+            <div class="h6 phone-pro"></div>
+            <div class="msg-opt">
+              <a href="#">
+                <i class="fa fa-phone"></i>
+                <p>Call</p>
+              </a>
+              <a href="#">
+                <i class="fa fa-envelope"></i>
+                <p>Email</p>
+              </a>
+              <a href="#" class="message-user">
+                <i class="fa fa-comment"></i>
+                <p>Message</p>
+              </a>
+            </div>
+          </div>
+
+          <div class="sec pro-bio">
+            <div class="h5 w-bold-x">Bio</div>
+            <p id="pro-bio"></p>
+          </div>
+
+          <div class="sec">
+            <div class="h5 w-bold-x">Groups in common</div><br>
+            <div class="user-group-list"></div>
+          </div>
+
+          <div class="sec">
+            <div class="h5 w-bold-x">Options</div>
+            <div class="user-option-list"></div>
+          </div>
+
+        </div>
+      </div>
+      
+      <!-- User Profile container -->
+      <div class="user-profile-container">
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-user-profile-con"></i>
+            <h4 class="w-bold u-name-title">My Profile</h4>
+          </div>
+          <div class="header-menu">
+              <div class="dropdown">
+                <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+                <div class="dropdown-content">
+                  <a class="" onclick="myProfile();" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="app-content" id="user-profile-content">
+
+          <form class="sec" id="pp-form">
+            <div class="dp-sec">
+              <img class="u-profile-dp" src="" alt="" />
+              <label for="pp-input" class="fa fa-camera"></label>
+            </div>
+            <button type="submit" class="w-margin-top btn btn-success pp-btn">Save Image</button>
+            <input type="file" accept="image/*" class="image-in" id="pp-input" onchange="readDp();" />
+          </form>
+
+          <div class="sec">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td><i class="fa fa-pencil"></i></td>
+                  <td id="pp-user"></td>
+                  <td><i class="fa fa-edit pp-edit" data-name="username"></i></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-user"></i></td>
+                  <td id="pp-name"></td>
+                  <td><i class="fa fa-edit pp-edit" data-name="name"></i></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-envelope"></i></td>
+                  <td id="pp-email"></td>
+                  <td><i class="fa fa-edit pp-edit" data-name="email"></i></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-phone"></i></td>
+                  <td id="pp-tel"></td>
+                  <td><i class="fa fa-edit pp-edit" data-name="phone"></i></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-male"></i></td>
+                  <td id="pp-gender"></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><i class="fa fa-book"></i></td>
+                  <td id="pp-bio"></td>
+                  <td><i class="fa fa-edit pp-edit" data-name="bio"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sec">
+            <div class="h5 w-bold-x">Recovery PIN</div>
+            <p class="w-small">This PIN is used to create a new password in case of a forgotten or lost password. The default PIN is 1234</p>
+            <button class="btn btn-primary pp-edit" data-name="pin"><i class="fa fa-edit"></i> Edit</button>
+          </div>
+
+          <div class="sec">
+            <div class="h5 w-bold-x">OpenAI API Key</div>
+            <p class="w-small">This is the API key to set up chatGPT feature. you can get your API by signing in to your OpenAI account</p>
+            <button class="btn btn-primary pp-edit" data-name="api-key"><i class="fa fa-edit"></i> Edit</button>
+            <button class="btn btn-primary">How to get your key</button>
+          </div>
+
+          <div class="sec acc-opt">
+            <button class="btn btn-danger account-rem" data-name="delete"><i class="fa fa-trash"></i> Delete Account</button>
+            <button class="btn btn-warning account-rem" data-name="deactivate"><i class="fa fa-warning"></i> Deactivate Account</button>
+          </div>
+
+        </div>
+      </div>
+    
+      
+      <!-- group create container -->
+      <div class="group-create-container">
+
+        <header>
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-group-create"></i>
+            <div class="titles">Create New Group</div>
+          </div>
+        </header>
+
+        <div class="app-content" id="group-create-content">
+          <form class="create-group-form">
+            <div class="g-icon-sec">
+              <input type="file" accept="image/*" id="g-icon" onchange="readFile()" />
+              <img class="g-icon" alt="" src="./image/group.jpeg" />
+              <label for="g-icon"><i class="fa fa-camera-retro"></i></label>
+            </div>
+
+            <div class="g-det-sec">
+
+              <input type="text" id="group-name" placeholder="Group Name" required />
+              <textarea rows="1" id="group-description" placeholder="Group Description"></textarea>
+              
+              <div style="display:flex;justify-content:flex-start;align-items:center;">
+                <label class="radio-container">Public
+                  <input type="radio" checked="checked" value="Public" name="group-type">
+                  <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Private
+                  <input type="radio" name="group-type" value="Private">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+
+              <button type="submit" id="create-g-btn" class="mt-2 btn btn-block btn-success">Create Group</button>
+
+            </div>
+          </form>
+          
+        </div>
+
+      </div>
+
+      <!-- group chat container -->
+      <div class="friend-list-container">
+
+        <div class="header">
+          <div class="header-title-c">
+            <i class="bx bx-chevron-left-circle close-friend-list"></i>
+            <div class="titles list-title">
+            </div>
+          </div>
+        </div>
+        <div class="app-content" id="friend-list"></div>
+
+      </div>
+
+    <!-- Navigation menu -->
+  <nav>
+    <div class="nav-content">
+      <div class="toggle-btn">
+        <i class='bx bx-plus'></i>
+      </div>
+      
+      <span style="--i:3;">
+        <a href="#" class="home-icon open-gpt-container"><i class='bx bxs-bot'></i></a>
+      </span>
+      <span style="--i:4;">
+        <a href="#" class="home-icon"><i class='fa fa-question' ></i></a>
+      </span>
+      <span style="--i:5;">
+        <a href="#" class="home-icon"><i class='bx bxs-envelope' ></i></a>
+      </span>
+      <span style="--i:4;">
+        <a href="#" class="status-icon open-add-image"><i class='bx bxs-camera'></i></a>
+      </span>
+      <span style="--i:5;">
+        <a href="#" class="status-icon open-add-status"><i class='bx bxs-edit'></i></a>
+      </span>
+    </div>
+  </nav>
+  
+  <!-- header -->
+  <header>
+      <div class="header-title"><i class="bx bx-message-rounded"></i>&nbsp;iChat</div>
+      <div class="header-menu">
+          <i class="bx bx-search open-search-user"></i>
+          <i class="bx bx-search open-search-group" style="display:none"></i>
+          <div>
+            <i class="bx bx-bell bx-tada-hover open-notification"></i>
+            <span class="note-number">0</span>
+          </div>
+          
+          <div class="dropdown">
+            <i class="bx bx-dots-vertical-rounded" onclick="dropDown($(this));"></i>
+            <div class="dropdown-content">
+              <a class="open-user-profile-con" href="#"><i class='bx bxs-user-circle'></i> My Profile</a>
+              <a class="" href="#"><i class='bx bxs-wrench'></i> Settings</a>
+              <a class="open-gpt-container" href="#"><i class='bx bxs-bot'></i> Chat with AI</a>
+              <a class="logout" href="#"><i class='bx bxs-log-out-circle'></i> <span class="logout-txt">Logout</a>
+              <a class="home-refresh" href="#"><i class='bx bxs-analyse'></i> Refresh</a>
+            </div>
+        </div>
+      </div>
+  </header>
+  <!-- tab -->
+  <div class="wrapper">
+        
+    <input type="radio" name="slider" checked id="home">
+    <input type="radio" name="slider" id="blog">
+    <input type="radio" name="slider" id="code">
+
+    <div class="tabs">
+      <label for="home" class="home tab-but"><i class="bx bx-chat"></i> Chats <span id="new_c_no">0</span></label>
+      <label for="blog" class="blog tab-but"><i class="bx bx-group"></i> Groups <span id="new_g_no">0</span></label>
+      <label for="code" class="code tab-but"><i class="bx bx-news"></i> Stories <span id="new_s_no">0</span></label>
+      <div class="slider"></div>
+    </div>
+
+    <section>
+
+      <div class="content content-1">
+        <table class="table table-hover">
+          <tbody class="chat-table"></tbody>
+        </table>
+      </div>
+
+      <div class="content content-2">
+        <div class="w-center w-padding w-bold-x h6 create-group">
+          <i class="bx bx-plus"></i> Create New Group
+        </div>
+        <table class="table table-hover">
+          <tbody class="group-table"></tbody>
+        </table>
+      </div>
+
+      <div class="content content-3">
+        <p class="w-center w-small w-text-gray"><i>Status disappears after 24 hours</i></p>
+        <!--
+        <div class="w-padding w-bold-x h5 w-text-purple">
+          My Status
+        </div>
+      -->
+        <table class="table table-hover">
+          <tbody class="">
+            <tr data-id="inactive" class="my-status-view">
+              <td>
+                <div class="status-circle" id="my-circle"></div>
+              </td>
+              <td class="w-small">
+                <div class="h6 w-bold">My Status</div>
+                <span id="my-status-time"></span>
+            </td>
+              <td><i class="fa fa-ellipsis-v"></i></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="o-stat w-padding w-bold-x h5">
+          Other Status
+        </div>
+        <table class="table table-hover">
+          <tbody class="status-table"></tbody>
+        </table>
+      </div>
+
+</div>
+<script>
+    // check if user is logged in
+    if(!localStorage.username || !localStorage.password) {
+      $('.page-loader').hide();
+      location.href = 'login.html';
+    }
+</script>
+<script src="js/he.js"></script>
+  <script src="js/group.js"></script>
+  <script src="js/status.js"></script>
+  <script src="js/dm.js"></script>
+  <script src="js/gpt.js"></script>
+  <script src="js/script.js"></script>
+  
+</body>
+</html>

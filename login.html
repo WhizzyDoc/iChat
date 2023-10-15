@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!-- Created By Rigan Tech -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+      <title>Login</title>
+      <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/fontawesome.css" />
+    <link rel="stylesheet" href="css/sweetalert.min.css" />
+    <link rel="stylesheet" href="css/register.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+   </head>
+   <body>
+      
+      <div class="container">
+         <header>Login Form</header>
+         <div class="form-outer">
+            
+            <form action="#" id="forgot-form" autocomplete="off" spellcheck="false">
+               <div class="page slide-page">
+                  <div class="field">
+                     <div class="label">New Password <span class="icon2 fa fa-eye" id="npass"></span></div>
+                     <input type="password" id="npassword" required>
+                   </div>
+                   <div class="field">
+                     <div class="label">Confirm New Password <span class="icon2 fa fa-eye" id="ncpass"></span></div>
+                     <input type="password" id="ncpassword" required>
+                   </div>
+                  <div class="field">
+                    <button type="submit" id="forgot-btn" class="submit">Reset Password</button>
+                  </div>
+                </div>
+            </form>
+
+            <form action="#" id="login-form" autocomplete="off" spellcheck="false">
+               <div class="page slide-page">
+                  <div class="field">
+                     <div class="label">Username</div>
+                     <input type="text" id="username" required>
+                   </div>
+                   <div class="field">
+                     <div class="label">Password <span class="icon2 fa fa-eye" id="pass"></span></div>
+                     <input type="password" id="password" required>
+                   </div>
+                  <div class="field">
+                    <button type="submit" id="login-btn" class="submit">Login</button>
+                  </div>
+                </div>
+            </form>
+         </div>
+         <h6><a href="#" id="forgot">Forgot Password?</a></h6>
+         <h6>New User? <a href="register.html">Sign Up</a></h6>
+      </div>
+      <script>
+         $(document).ready(function() {
+            if(localStorage.username && localStorage.password) {
+               location.href = './index.html';
+            }
+         })
+         
+      </script>
+      <script>
+         const base_url = `https://riganapi.pythonanywhere.com`;
+         var password = document.querySelector('#password');
+         var npassword = document.querySelector('#npassword');
+         var ncpassword = document.querySelector('#ncpassword');
+         var pass = document.querySelector('#pass');
+         var ncpass = document.querySelector('#ncpass');
+         var npass = document.querySelector('#npass');
+         pass.onclick = function() {
+            if(password.type == "password") {
+               password.type = "text";
+            }
+            else {
+               password.type = "password";
+            }
+         }
+         npass.onclick = function() {
+            if(npassword.type == "password") {
+               npassword.type = "text";
+            }
+            else {
+               npassword.type = "password";
+            }
+         }
+         ncpass.onclick = function() {
+            if(ncpassword.type == "password") {
+               ncpassword.type = "text";
+            }
+            else {
+               ncpassword.type = "password";
+            }
+         }
+         function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if(parts.length === 2) return parts.pop().split(';').shift();
+            }
+            const csrftoken = getCookie('csrftoken');
+            //console.log(csrftoken);
+      </script>
+      <script>
+         var userName = "";
+         passWord = '';
+         $('#forgot').click(function(e) {
+            e.preventDefault();
+            swal({
+               title: "Forgot Password",
+               input: "text",
+               showCancelButton: true,
+               confirmButtonText: "Submit",
+               cancelButtonText: "Cancel",
+               inputPlaceholder: "Enter your username",
+               inputValidator: (value) => {
+                  if(value == "") {
+                     return "Field cannot be empty!";
+                  }
+               },
+            })
+            .then((result) => {
+               if(result.value) {
+                  userName = result.value;
+                  // show prompt for recovery Pin
+                  //
+                  swal({
+                     title: "Forgot Password",
+                     input: "text",
+                     showCancelButton: true,
+                     confirmButtonText: "Submit",
+                     cancelButtonText: "Cancel",
+                     inputPlaceholder: "Enter your 4-digit recovery PIN",
+                     inputValidator: (value) => {
+                        if(value == "") {
+                           return "Field cannot be empty!";
+                        }
+                        else if(value.length != 4) {
+                           return "PIN must be 4 digits!";
+                        }
+                     },
+                  })
+                  .then((pass) => {
+                     if(pass.value) {
+                        passWord = pass.value;
+                        //swal(`Hello ${userName}, password is ${passWord}`);
+                        forgotPassword(userName, passWord);
+                     }
+                     else {
+                        swal("No input provided");
+                     }
+                  });
+               }
+               else {
+                  swal("No username provided");
+               }
+            });
+         });
+
+         function forgotPassword(user, pin) {
+            var url = `${base_url}/api/users/forgot_password/`;
+            const formData = JSON.stringify({
+               username: user,
+               recoveryPin: pin
+            });
+            $('#login-btn').html(`<div class="loader"></div>`).attr('disabled', true);
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                  },
+                body: formData,
+            })
+            .then(response => {
+               if(!response.ok) {
+                  throw new Error('Network response was not ok');
+               }
+                return response.json() // convert response to json
+            })
+            .then(data => {
+               console.log(data);
+               if(data['status'] == 'success') {
+                  swal("Success", data['message'], "success");
+                  $('#login-form').hide();
+                  $('#forgot-form').show();
+                  $('header').html(`Reset Password`)
+               }
+               else if(data['status'] == 'error') {
+                  swal("Error", data['message'], "error");
+               } 
+               $('#login-btn').empty().text('Login').attr('disabled', false);
+            })
+            .catch(error => {
+              console.log(error);
+              $('#login-btn').empty().text('Login').attr('disabled', false);
+            });
+         }
+
+         // login
+         $('#login-form').submit(function(e) {
+        e.preventDefault();
+        var login_url = `${base_url}/api/users/authentication/`;
+            const formData = JSON.stringify({
+               username: $('#username').val(),
+               password: $('#password').val()
+            });
+            
+            $('#login-btn').html(`<div class="loader"></div>`).attr('disabled', true);
+    
+            fetch(login_url, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                  },
+                body: formData,
+            })
+            .then(response => {
+               if(!response.ok) {
+                  throw new Error('Network response was not ok');
+               }
+                return response.json() // convert response to json
+            })
+            .then(data => {
+                     console.log(data)
+                    // perform action with response data
+                    var msg = data['status'];
+                    if(msg == 'success') {
+                      localStorage.setItem('username', $('#username').val());
+                      localStorage.setItem('password', $('#password').val());
+                      localStorage.setItem('profile_id', data['profile'].id);
+                      swal("Success", data['message'], "success");
+                      location.href = 'index.html';
+                    }
+                    else if(msg == 'error') {
+                     swal("Error", data['message'], "error");
+                    }
+                    $('#login-btn').empty().text('Login').attr('disabled', false);
+                    
+            })
+            .catch(error => {
+              console.log(error);
+              $('#login-btn').empty().text('Login').attr('disabled', false);
+              })
+      })
+
+      // create new password
+      $('#forgot-form').submit(function(e) {
+        e.preventDefault();
+        var pass_url = `${base_url}/api/users/create_new_password/`;
+        if($('#npassword').val() != $('#ncpassword').val()) {
+            swal("Error", 'Passwords do not match', "error");
+            return;
+        }
+            const formData = JSON.stringify({
+               username: userName,
+               password: $('#npassword').val()
+            });
+            
+            $('#forgot-btn').html(`<div class="loader"></div>`).attr('disabled', true);
+    
+            fetch(pass_url, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                  },
+                body: formData,
+            })
+            .then(response => {
+               if(!response.ok) {
+                  throw new Error('Network response was not ok');
+               }
+                return response.json() // convert response to json
+            })
+            .then(data => {
+                    // perform action with response data
+                    var msg = data['status'];
+                    if(msg == 'success') {
+                      swal("Success", data['message'], "success");
+                      location.reload();
+                    }
+                    else if(msg == 'error') {
+                     swal("Error", data['message'], "error");
+                    }
+                    $('#forgot-btn').empty().text('Reset Password').attr('disabled', false);
+                    
+            })
+            .catch(error => {
+              console.log(error);
+              $('#forgot-btn').empty().text('Reset Password').attr('disabled', false);
+              })
+      })
+      </script>
+   </body>
+</html>
