@@ -205,13 +205,7 @@ function sendGPTChat() {
                 message = data.message;
             }
             else if(data.mode == 'gpt') {
-                message = `Error while generating response. could be due to:<br><br>
-                            <ul>
-                                <li>No internet connection</li>
-                                <li>Invalid/incorrect API key</li>
-                                <li>Exhausted API limits</li>
-                                <li>Server error</li>
-                            </ul>`;
+                message = data.message;
             }
             var temp = `<div class="message-con">
                     <div class="chat other">
