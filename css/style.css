@@ -33,6 +33,9 @@ a:hover {
   margin: auto;
   animation: spin 2s linear infinite;
 }
+.chat-table {
+	overflow-y: auto;
+}
 .create-group, .o-stat {color: var(--bg-light)}
 .page-loader {
   width: 100vw;
