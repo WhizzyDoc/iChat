@@ -33,7 +33,7 @@ a:hover {
   margin: auto;
   animation: spin 2s linear infinite;
 }
-.chat-table {
+.content {
 	overflow-y: auto;
 }
 .create-group, .o-stat {color: var(--bg-light)}
