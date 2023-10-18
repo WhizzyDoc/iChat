@@ -257,13 +257,13 @@ function loadMessages() {
                 }
                 else if(pdfExt.includes(fileExt)) {
                     file = `<div class="file-det">
-                    <a href="${base_url}${chat[i].files}" data-image="${chat[i].files}" class="file-download"><i class="bx bx-download"></i></a>
+                    <a href="${base_url}${chat[i].files}" data-image="${base_url}${chat[i].files}" class="file-download"><i class="bx bx-download"></i></a>
                     <span>${file_des}</span>
                     </div>`;
                 }
                 else if(docExt.includes(fileExt)) {
                     file = `<div class="file-det">
-                    <a href="${base_url}${chat[i].files}" data-image="${chat[i].files}" class="file-download"><i class="bx bx-download"></i></a>
+                    <a href="${base_url}${chat[i].files}" data-image="${base_url}${chat[i].files}" class="file-download"><i class="bx bx-download"></i></a>
                     <span>${file_des}</span>
                     </div>`;
                 }
