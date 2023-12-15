@@ -325,10 +325,11 @@ audio, video {
 }
 .message-form {
   height: 100px;
+	width:100vw;
   padding: 5px;
   padding-bottom: 20px;
   position: absolute;
-bottom: 10px;
+bottom: 50px;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
