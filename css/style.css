@@ -321,6 +321,7 @@ audio, video {
   height: calc(100vh - 150px);
   border: none;
   overflow-y: auto;
+padding-bottom:50px;
   background: rgba(2, 80, 197, 0.2);
 }
 .message-form {
