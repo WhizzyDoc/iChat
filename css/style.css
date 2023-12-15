@@ -225,6 +225,7 @@ header {
   width: 100vw;
   height: 100vh;
   position: fixed;
+overflow-y: auto;
   top: 0;
   right: -110%;
   background: rgba(255, 255, 255);
@@ -257,7 +258,6 @@ header {
 .friend-list-container {
   width: 100vw;
   height: 100vh;
-overflow-y: auto;
   position: fixed;
   top: 40%;
   left: 40%;
@@ -327,7 +327,8 @@ audio, video {
   height: 100px;
   padding: 5px;
   padding-bottom: 20px;
-  position: relative;
+  position: absolute;
+bottom: 10px;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
